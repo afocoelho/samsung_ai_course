@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    ports:
+      - "80:8000"
+    networks:
+      - backend
+    depends_on:
+      - db
+    volumes: 
+      - /var/lib/data
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PW}
+      - POSTGRES_DB=${POSTGRES_DB}
+    expose:
+      - "5433" # Publishes 5433 to other containers but NOT to host machine
+    ports:
+      - 5433:5433 # Publishes 5433 to host machine
+    volumes: 
+      - db:/var/lib/postgresql/data
+    networks:
+      - backend
+    command:
+      - -p 5433
+networks:
+  backend:
+    driver: bridge
+volumes:
+  db:
+    driver: local

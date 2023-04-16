@@ -1,7 +1,6 @@
 from fastapi import FastAPI,HTTPException,status
 from pydantic import BaseModel,Field,validator
 import importlib
-
 app = FastAPI()
 
 
@@ -16,8 +15,10 @@ class ExerciseResponse(BaseModel):
     answer: str
     status: str # status if the info was posted on not on the DB
 
-@app.post("/exercise-post/")
-async def exercise_post(answer:ExerciseRequest ) -> ExerciseResponse:
-    
+#@app.post("/exercise-post/")
+#async def exercise_post(answer:ExerciseRequest ) -> ExerciseResponse:
+    #return 
 
-    return 
+@app.get("/")
+async def test_get():
+    return "Working!"
